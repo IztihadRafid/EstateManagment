@@ -6,7 +6,7 @@ interface PropertyCardProps {
 }
 export const PropertyCard = ({ property }: PropertyCardProps) => {
   return (
-    <Link href={`/properties/${property.id}`} className="block h-125">
+    <Link href={`/property/${property.id}`} className="block h-125">
       <div className="relative  rounded-lg shadow-md overflow-hidden hover:shadow-lg h-full transition-all duration-300 hover:scale-105">
         <Image
           src={property?.image}

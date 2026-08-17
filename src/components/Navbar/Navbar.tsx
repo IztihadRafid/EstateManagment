@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { FaHome } from "react-icons/fa";
 import { useState } from "react";
 import logo from "../../../public/images/estatemarket-logo-light.webp";
+import logodark from "../../../public/images/estatemarket-logo.webp";
 
 interface NavbarProps {
   variant?: "transparent" | "solid";
@@ -46,7 +47,11 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
             className="flex shrink-0 items-center"
             aria-label="Estatemarket home"
           >
-            <Image src={logo} alt="Estatemarket Logo" width={200} priority />
+            {isTransparent ? (
+              <Image src={logo} alt="Estatemarket Logo" width={200} />
+            ) : (
+              <Image src={logodark} alt="Estatemarket Logo" width={200} />
+            )}
           </Link>
 
           <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
@@ -109,9 +114,7 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
                       href={href}
                       onClick={() => setIsMenuOpen(false)}
                       className={`relative rounded-lg px-3 py-3 text-sm font-medium transition-colors after:absolute after:bottom-1 after:left-3 after:h-px after:w-[calc(100%-1.5rem)] after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-200 hover:after:scale-x-100 ${
-                        isTransparent
-                          ? "hover:bg-white/10"
-                          : "hover:bg-black/5"
+                        isTransparent ? "hover:bg-white/10" : "hover:bg-black/5"
                       }`}
                     >
                       {label}
