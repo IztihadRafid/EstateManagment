@@ -1,4 +1,6 @@
+import { RecentProperties } from "@/components/home/RecentProperties";
 import SearchBox from "@/components/home/SearchBox";
+import Footer from "@/components/Footer/Footer";
 import { FrontendLayout } from "@/components/layouts/FrontendLayout";
 import Navbar from "@/components/Navbar/Navbar";
 
@@ -40,6 +42,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <RecentProperties></RecentProperties>
+      <Footer />
     </FrontendLayout>
   );
 }
