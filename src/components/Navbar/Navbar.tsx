@@ -7,6 +7,7 @@ import { FaHome } from "react-icons/fa";
 import { useState } from "react";
 import logo from "../../../public/images/estatemarket-logo-light.webp";
 import logodark from "../../../public/images/estatemarket-logo.webp";
+import { useAuthModal } from "@/store/useAuthModalStore";
 
 interface NavbarProps {
   variant?: "transparent" | "solid";
@@ -20,6 +21,7 @@ const navLinks = [
 
 const Navbar = ({ variant = "transparent" }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { openLogin } = useAuthModal();
   const isTransparent = variant === "transparent";
   const textColor = isTransparent
     ? "text-white hover:text-white/70"
@@ -35,13 +37,14 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <nav
-          className={`relative flex h-20 items-center justify-between ${
+          className={`relative z-50 flex h-20 items-center justify-between ${
             isTransparent
               ? "mt-6 rounded-3xl border border-white/10 bg-white/5 px-6 backdrop-blur-2xl"
               : "px-0"
           }`}
           aria-label="Main navigation"
         >
+          {/* logo */}
           <Link
             href="/"
             className="flex shrink-0 items-center"
@@ -67,9 +70,9 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
           </div>
 
           <div className="hidden items-center gap-2 lg:flex">
-            <Link href="/login" className={actionClassName}>
+            <button onClick={openLogin} className={actionClassName}>
               Login
-            </Link>
+            </button>
             <Link href="/add-property" className={actionClassName}>
               <FaHome aria-hidden="true" />
               Add Property
@@ -125,13 +128,9 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
                 <div
                   className={`mt-3 grid gap-2 border-t pt-3 ${isTransparent ? "border-white/10" : "border-black/10"}`}
                 >
-                  <Link
-                    href="/login"
-                    onClick={() => setIsMenuOpen(false)}
-                    className={actionClassName}
-                  >
+                  <button onClick={openLogin} className={actionClassName}>
                     Login
-                  </Link>
+                  </button>
                   <Link
                     href="/add-property"
                     onClick={() => setIsMenuOpen(false)}
