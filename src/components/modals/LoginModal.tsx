@@ -195,7 +195,7 @@ export const LoginModal = () => {
 
             <div className="text-center mt-4">
               <span className="text-gray-600 text-sm">
-                Already have an account?{" "}
+                Don`t have account?{" "}
               </span>
               <button
                 type="button"
