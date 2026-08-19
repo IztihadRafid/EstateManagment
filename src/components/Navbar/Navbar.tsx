@@ -8,6 +8,8 @@ import { useState } from "react";
 import logo from "../../../public/images/estatemarket-logo-light.webp";
 import logodark from "../../../public/images/estatemarket-logo.webp";
 import { useAuthModal } from "@/store/useAuthModalStore";
+import { useCreatePropertyModalStore } from "../../store/useCreatePropertyModalStore";
+import { CreatePropertyModal } from "../modals/CreatePropertyModal";
 
 interface NavbarProps {
   variant?: "transparent" | "solid";
@@ -22,6 +24,8 @@ const navLinks = [
 const Navbar = ({ variant = "transparent" }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { openLogin } = useAuthModal();
+  const { open: OpenCreateModal } = useCreatePropertyModalStore();
+
   const isTransparent = variant === "transparent";
   const textColor = isTransparent
     ? "text-white hover:text-white/70"
@@ -73,10 +77,10 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
             <button onClick={openLogin} className={actionClassName}>
               Login
             </button>
-            <Link href="/add-property" className={actionClassName}>
+            <button className={actionClassName} onClick={OpenCreateModal}>
               <FaHome aria-hidden="true" />
               Add Property
-            </Link>
+            </button>
           </div>
 
           <div className="relative z-50 lg:hidden">
@@ -106,7 +110,7 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
                 id="mobile-navigation"
                 className={`absolute right-0 top-full mt-5 w-72 origin-top-right animate-in fade-in zoom-in-95 slide-in-from-top-2 rounded-2xl border p-3 shadow-xl duration-200 ${
                   isTransparent
-                    ? "border-white/10  text-white backdrop-blur-xl"
+                    ? "border-white/10  text-white backdrop-blur-xl bg-white/10"
                     : "border-black/10 bg-card text-foreground"
                 }`}
               >
@@ -131,14 +135,10 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
                   <button onClick={openLogin} className={actionClassName}>
                     Login
                   </button>
-                  <Link
-                    href="/add-property"
-                    onClick={() => setIsMenuOpen(false)}
-                    className={actionClassName}
-                  >
+                  <button className={actionClassName} onClick={OpenCreateModal}>
                     <FaHome aria-hidden="true" />
                     Add Property
-                  </Link>
+                  </button>
                 </div>
               </div>
             )}
