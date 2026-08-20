@@ -2,6 +2,7 @@ import { FrontendLayout } from "@/components/layouts/FrontendLayout";
 import Navbar from "@/components/Navbar/Navbar";
 import { PropertyCard } from "@/components/properties/PropertyCard";
 import { dummyProperties } from "@/constants/dummyProperties";
+import { FilterButton } from "@/constants/FilterButton";
 
 const MarketPlace = () => {
   return (
@@ -17,9 +18,7 @@ const MarketPlace = () => {
         </p>
         <div className="flex items-center justify-between mt-8">
           <h2 className="text-2xl font-semibold text-foreground">Explore</h2>
-          <button className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-            Filter
-          </button>
+          <FilterButton></FilterButton>
         </div>
 
         {/* cards */}

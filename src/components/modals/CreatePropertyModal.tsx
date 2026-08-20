@@ -216,7 +216,7 @@ export const CreatePropertyModal = () => {
             ></ImageUpload>
           </div>
         )}
-
+        {/* pricing */}
         {step === STEPS.PRICING && (
           <div className="space-y-6 w-full">
             <div>

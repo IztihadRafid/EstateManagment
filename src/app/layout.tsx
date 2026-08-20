@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ResgisterModal } from "@/components/modals/ResgisterModal";
 import { LoginModal } from "@/components/modals/LoginModal";
 import { CreatePropertyModal } from "@/components/modals/CreatePropertyModal";
+import FilterModal from "@/components/modals/FilterModal";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ResgisterModal />
         <LoginModal />
         <CreatePropertyModal></CreatePropertyModal>
+        <FilterModal></FilterModal>
       </body>
     </html>
   );
