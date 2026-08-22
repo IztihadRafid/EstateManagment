@@ -17,7 +17,7 @@ export const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
   }, [isOpen]);
   return (
     <div
-      aria-hidden={isOpen}
+      inert={!isOpen}
       className={`fixed inset-0 z-[100] flex items-center  justify-center px-4 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
     >
       {/* backdrop */}

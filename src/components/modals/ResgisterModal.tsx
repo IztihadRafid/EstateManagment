@@ -4,6 +4,10 @@ import { Modal } from "./Modal";
 import { useState } from "react";
 import { PasswordInput } from "../PasswordInput/PasswordInput";
 import { FaGoogle } from "react-icons/fa6";
+import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { signWithGoogle } from "@/services/SigninwithGoogle";
 
 interface RegisterValues {
   name: string;
@@ -14,6 +18,7 @@ type RegisterErrors = Partial<Record<keyof RegisterValues, string>>;
 
 export const ResgisterModal = () => {
   // Hooks
+  const router = useRouter();
   const { openLogin, isResgisterOpen, closeRegister } = useAuthModal();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<RegisterErrors>({});
@@ -55,13 +60,32 @@ export const ResgisterModal = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // handle submit function
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // handle submit registration function
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
-    setLoading(true);
+
     try {
-      console.log("submitting", values);
+      setLoading(true);
+      const { error } = await authClient.signUp.email({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      });
+      if (error) {
+        toast.error(error.message as string);
+        return;
+      }
+      toast.success("Account created successfully");
+      router.refresh();
+      setValues({ name: "", email: "", password: "" });
+      closeRegister();
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -214,6 +238,7 @@ export const ResgisterModal = () => {
             </div>
 
             <button
+              onClick={signWithGoogle}
               type="button"
               className="w-full py-3 border border-gray-300 rounded-xl font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
             >

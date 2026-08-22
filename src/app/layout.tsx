@@ -6,7 +6,7 @@ import { ResgisterModal } from "@/components/modals/ResgisterModal";
 import { LoginModal } from "@/components/modals/LoginModal";
 import { CreatePropertyModal } from "@/components/modals/CreatePropertyModal";
 import FilterModal from "@/components/modals/FilterModal";
-
+import { Toaster } from "react-hot-toast";
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const poppins = Poppins({
@@ -38,6 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <LoginModal />
         <CreatePropertyModal></CreatePropertyModal>
         <FilterModal></FilterModal>
+        <Toaster></Toaster>
       </body>
     </html>
   );

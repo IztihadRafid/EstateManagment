@@ -4,6 +4,10 @@ import { Modal } from "./Modal";
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa6";
 import { PasswordInput } from "../PasswordInput/PasswordInput";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { signWithGoogle } from "@/services/SigninwithGoogle";
 
 interface LoginValues {
   email: string;
@@ -15,6 +19,7 @@ type LoginErrors = Partial<Record<keyof LoginValues, string>>;
 export const LoginModal = () => {
   const { openRegister, isLoginOpen, closeLogin } = useAuthModal();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const [errors, setErrors] = useState<LoginErrors>({});
   const [values, setValues] = useState<LoginValues>({
     email: "",
@@ -49,12 +54,30 @@ export const LoginModal = () => {
   };
 
   // handle submit function
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
-    setLoading(true);
+
     try {
-      console.log("submitting", values);
+      setLoading(true);
+      const { error } = await authClient.signIn.email({
+        email: values.email,
+        password: values.password,
+      });
+      if (error) {
+        toast.error(error.message as string);
+        return;
+      }
+      toast.success("Logged in Successfully");
+      router.refresh();
+      setValues({ email: "", password: "" });
+      closeLogin();
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -186,6 +209,7 @@ export const LoginModal = () => {
             </div>
 
             <button
+              onClick={signWithGoogle}
               type="button"
               className="w-full py-3 border border-gray-300 rounded-xl font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
             >

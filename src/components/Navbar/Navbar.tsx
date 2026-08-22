@@ -9,7 +9,8 @@ import logo from "../../../public/images/estatemarket-logo-light.webp";
 import logodark from "../../../public/images/estatemarket-logo.webp";
 import { useAuthModal } from "@/store/useAuthModalStore";
 import { useCreatePropertyModalStore } from "../../store/useCreatePropertyModalStore";
-import { CreatePropertyModal } from "../modals/CreatePropertyModal";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface NavbarProps {
   variant?: "transparent" | "solid";
@@ -22,8 +23,10 @@ const navLinks = [
 ];
 
 const Navbar = ({ variant = "transparent" }: NavbarProps) => {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { openLogin } = useAuthModal();
+  const { data: session, isPending } = authClient.useSession();
   const { open: OpenCreateModal } = useCreatePropertyModalStore();
 
   const isTransparent = variant === "transparent";
@@ -32,6 +35,11 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
     : "text-foreground hover:text-primary";
   const actionClassName =
     "inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-blue-800 px-5 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60";
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+    router.refresh();
+  };
 
   return (
     <header
@@ -74,13 +82,22 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
           </div>
 
           <div className="hidden items-center gap-2 lg:flex">
-            <button onClick={openLogin} className={actionClassName}>
-              Login
-            </button>
-            <button className={actionClassName} onClick={OpenCreateModal}>
-              <FaHome aria-hidden="true" />
-              Add Property
-            </button>
+            {session?.user.email ? (
+              <button onClick={handleLogout} className={actionClassName}>
+                Log Out
+              </button>
+            ) : (
+              <button onClick={openLogin} className={actionClassName}>
+                Login
+              </button>
+            )}
+
+            {!isPending && session && (
+              <button className={actionClassName} onClick={OpenCreateModal}>
+                <FaHome aria-hidden="true" />
+                Add Property
+              </button>
+            )}
           </div>
 
           <div className="relative z-50 lg:hidden">
@@ -132,13 +149,25 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
                 <div
                   className={`mt-3 grid gap-2 border-t pt-3 ${isTransparent ? "border-white/10" : "border-black/10"}`}
                 >
-                  <button onClick={openLogin} className={actionClassName}>
-                    Login
-                  </button>
-                  <button className={actionClassName} onClick={OpenCreateModal}>
-                    <FaHome aria-hidden="true" />
-                    Add Property
-                  </button>
+                  {session?.user.email ? (
+                    <button onClick={handleLogout} className={actionClassName}>
+                      Log Out
+                    </button>
+                  ) : (
+                    <button onClick={openLogin} className={actionClassName}>
+                      Login
+                    </button>
+                  )}
+
+                  {!isPending && session && (
+                    <button
+                      className={actionClassName}
+                      onClick={OpenCreateModal}
+                    >
+                      <FaHome aria-hidden="true" />
+                      Add Property
+                    </button>
+                  )}
                 </div>
               </div>
             )}
