@@ -6,7 +6,9 @@ import { PropertyTypes } from "@/constants/propertyTypes";
 import { PropertyTypeCard } from "../properties/PropertyTypeCard";
 import { Counter } from "../properties/Counter";
 import ImageUpload from "../properties/ImageUpload";
-
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 export const CreatePropertyModal = () => {
   const STEPS = {
     TYPE: 0,
@@ -18,6 +20,7 @@ export const CreatePropertyModal = () => {
   };
 
   const { open, close, isOpen } = useCreatePropertyModalStore();
+  const router = useRouter();
   const [step, setStep] = useState(STEPS.TYPE);
   const [loading, setLoading] = useState(false);
   const [properType, setProperType] = useState("");
@@ -69,25 +72,48 @@ export const CreatePropertyModal = () => {
     setPreview(null);
     setListingType("sale");
     setPrice("");
-  };
-  const createListing = () => {
-    const data = {
-      properType,
-      location,
-      address,
-      bedrooms,
-      bathrooms,
-      parkingSpaces,
-      area,
-      title,
-      description,
-      image,
-      listingType,
-      price,
-    };
-    resetForm();
     close();
-    console.log(data);
+  };
+  const createListing = async () => {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      // formData.append("price", price);
+      formData.append("location", location);
+      formData.append("address", address);
+      formData.append("area", area);
+      formData.append("propertyType", properType);
+      formData.append("listingType", listingType);
+      formData.append("bedrooms", bedrooms.toString());
+      formData.append("bathrooms", bathrooms.toString());
+      formData.append("parkingSpaces", parkingSpaces.toString());
+      formData.append("price", price.toString());
+
+      if (image) {
+        formData.append("image", image);
+      }
+
+      await axios.post("/api/properties", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      toast.success("Property created successfully");
+      router.replace("/properties");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data.error ||
+            "Something went wrong. Please try again.",
+        );
+        return;
+      }
+    } finally {
+      setLoading(false);
+    }
+    resetForm();
   };
   return (
     <Modal title="Create a new listing" onClose={close} isOpen={isOpen}>
