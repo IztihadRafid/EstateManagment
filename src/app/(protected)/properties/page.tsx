@@ -1,7 +1,11 @@
 import { FrontendLayout } from "@/components/layouts/FrontendLayout";
 import Navbar from "@/components/Navbar/Navbar";
 import { PropertyCard } from "@/components/properties/PropertyCard";
-import { dummyProperties } from "@/constants/dummyProperties";
+import { SkeletonCard } from "@/components/skeletonCard/SkeletonCard";
+import { EmptyState } from "@/components/ui/EmptyState";
+// import { dummyProperties } from "@/constants/dummyProperties";
+import { getUserProperty } from "@/server-actions/getUserProperty";
+import { Suspense } from "react";
 
 const PropertiesPage = () => {
   return (
@@ -16,14 +20,28 @@ const PropertiesPage = () => {
         </div>
 
         {/* cards */}
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mt-6">
-          {dummyProperties.map((property) => (
-            <PropertyCard key={property.id} property={property}></PropertyCard>
-          ))}
-        </div>
+        <Suspense fallback={<SkeletonCard />}>
+          <PropertiesContent></PropertiesContent>
+        </Suspense>
       </div>
     </FrontendLayout>
   );
 };
-
+async function PropertiesContent() {
+  const properties = await getUserProperty();
+  if (properties.length === 0)
+    return (
+      <EmptyState
+        title="No Properties"
+        subtitle="You have no properties yet. Check back later after creating new listings"
+      ></EmptyState>
+    );
+  return (
+    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mt-6">
+      {properties.map((property) => (
+        <PropertyCard key={property.id} property={property}></PropertyCard>
+      ))}
+    </div>
+  );
+}
 export default PropertiesPage;
