@@ -1,3 +1,4 @@
+import { Property } from "@/generated/prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,8 +28,12 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
             </span>
           </div>
           <h3 className="text-xl font-bold">{property.title}</h3>
-          <p className="text-gray-200 text-sm">{property.location}, {property.address}</p>
-          <p className="text-gray-300 text-xs mt-1 line-clamp-2">{property.description}</p>
+          <p className="text-gray-200 text-sm">
+            {property.location}, {property.address}
+          </p>
+          <p className="text-gray-300 text-xs mt-1 line-clamp-2">
+            {property.description}
+          </p>
           <p className="text-2xl font-bold mt-2">
             ${property?.price.toLocaleString()}
           </p>

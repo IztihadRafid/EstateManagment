@@ -98,7 +98,7 @@ const FilterModal = () => {
                   placeholder="00000"
                   value={minPrice}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setMinPrice(e.target.value)
+                    setMinPrice(Number(e.target.value))
                   }
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200 placeholder:text-gray-400"
                 />
@@ -113,7 +113,7 @@ const FilterModal = () => {
                   placeholder="99999"
                   value={maxPrice}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setMaxPrice(e.target.value)
+                    setMaxPrice(Number(e.target.value))
                   }
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200 placeholder:text-gray-400"
                 />
