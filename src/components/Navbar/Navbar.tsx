@@ -11,7 +11,6 @@ import { useAuthModal } from "@/store/useAuthModalStore";
 import { useCreatePropertyModalStore } from "../../store/useCreatePropertyModalStore";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { getCurrentUser } from "@/server-actions/getCurrentUser";
 
 interface NavbarProps {
   variant?: "transparent" | "solid";
