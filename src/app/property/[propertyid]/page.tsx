@@ -1,12 +1,13 @@
 import { FrontendLayout } from "@/components/layouts/FrontendLayout";
 import Navbar from "@/components/Navbar/Navbar";
 import EmailForm from "@/components/properties/EmailForm";
-import { FaLocationDot, FaPhone, FaEnvelope } from "react-icons/fa6";
+import { Property } from "@/generated/prisma/client";
+import { FaLocationDot } from "react-icons/fa6";
 import { IoBedOutline } from "react-icons/io5";
 import { LuBath } from "react-icons/lu";
 import { SiZend } from "react-icons/si";
 
-export default function PropertyPage() {
+export default function PropertyPage({ property }: Property) {
   return (
     <FrontendLayout>
       <Navbar variant="solid"></Navbar>
@@ -27,9 +28,7 @@ export default function PropertyPage() {
             {/* Main Content */}
             <div className="lg:col-span-2">
               <div className="mb-6">
-                <h1 className="text-4xl font-bold text-foreground mb-2">
-                  Modern Luxury Apartment
-                </h1>
+                <h1 className="text-4xl font-bold text-foreground mb-2"></h1>
                 <div className="flex items-center gap-2 text-gray-600">
                   <FaLocationDot className="text-primary" />
                   <span>Downtown, New York, NY</span>

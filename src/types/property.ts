@@ -1,18 +1,3 @@
-// interface Property {
-//   id: string;
-//   title: string;
-//   location: string;
-//   price: number;
-//   type: string;
-//   status: string;
-//   bedrooms: number;
-//   bathrooms: number;
-//   area: number;
-//   featured: boolean;
-//   description: string;
-
-//   image: string;
-// }
 export type Property = {
   id: string;
   title: string;
@@ -26,8 +11,8 @@ export type Property = {
   bathrooms: number;
   parkingSpaces: number;
   area: number | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updateAt: Date;
   ownerId: string;
   image: string;
 };

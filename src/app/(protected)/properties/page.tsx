@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar/Navbar";
 import { PropertyCard } from "@/components/properties/PropertyCard";
 import { SkeletonCard } from "@/components/skeletonCard/SkeletonCard";
 import { EmptyState } from "@/components/ui/EmptyState";
-// import { dummyProperties } from "@/constants/dummyProperties";
 import { getUserProperty } from "@/server-actions/getUserProperty";
 import { Suspense } from "react";
 

@@ -1,7 +1,10 @@
-import { dummyProperties } from "@/constants/dummyProperties";
+import { Suspense } from "react";
 import { PropertyCard } from "../properties/PropertyCard";
+import { getRecentProperties } from "@/server-actions/getRecentProperties";
+import { SkeletonCard } from "../skeletonCard/SkeletonCard";
 
-export const RecentProperties = () => {
+export const RecentProperties = async () => {
+  const properties = await getRecentProperties();
   return (
     <section className="py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
@@ -23,9 +26,11 @@ export const RecentProperties = () => {
 
         {/* properties */}
         <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-2 my-6">
-          {dummyProperties.map((property) => (
-            <PropertyCard key={property.id} property={property} />
-          ))}
+          <Suspense fallback={<SkeletonCard />}>
+            {properties.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </Suspense>
         </div>
       </div>
     </section>

@@ -15,7 +15,7 @@ export const getUserProperty = async () => {
     });
     return properties;
   } catch (error) {
-    console.log("Failed to fetc properties", error);
+    console.error("Failed to fetc properties", error);
     return [];
   }
 };

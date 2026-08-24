@@ -6,7 +6,6 @@ interface PropertyCardProps {
   property: Property;
 }
 export const PropertyCard = ({ property }: PropertyCardProps) => {
-  console.log(property);
   return (
     <Link href={`/property/${property.id}`} className="block h-125">
       <div className="relative  rounded-lg shadow-md overflow-hidden hover:shadow-lg h-full transition-all duration-300 hover:scale-105">

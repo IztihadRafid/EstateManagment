@@ -1,10 +1,21 @@
 import { FrontendLayout } from "@/components/layouts/FrontendLayout";
 import Navbar from "@/components/Navbar/Navbar";
-import { PropertyCard } from "@/components/properties/PropertyCard";
-import { dummyProperties } from "@/constants/dummyProperties";
 import { FilterButton } from "@/constants/FilterButton";
-
-const MarketPlace = () => {
+import { MarketPlace } from "@/components/marketplace/MarketPlace";
+import { Suspense } from "react";
+import { SkeletonCard } from "@/components/skeletonCard/SkeletonCard";
+type MarketPlacePageProp = {
+  searchParams: {
+    search?: string;
+    propertyType?: string;
+    location?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    address?: string;
+  };
+};
+const MarketPlacePage = async ({ searchParams }: MarketPlacePageProp) => {
+  const params = await searchParams;
   return (
     <FrontendLayout>
       <Navbar variant="solid"></Navbar>
@@ -22,14 +33,12 @@ const MarketPlace = () => {
         </div>
 
         {/* cards */}
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mt-6">
-          {dummyProperties.map((property) => (
-            <PropertyCard key={property.id} property={property}></PropertyCard>
-          ))}
-        </div>
+        <Suspense fallback={<SkeletonCard />}>
+          <MarketPlace searchParams={params}></MarketPlace>
+        </Suspense>
       </div>
     </FrontendLayout>
   );
 };
 
-export default MarketPlace;
+export default MarketPlacePage;

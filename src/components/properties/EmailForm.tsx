@@ -25,11 +25,9 @@ export default function EmailForm() {
       ...prevValues,
       [name]: value,
     }));
-    console.log(name, "value:", value);
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("all data", values);
   };
   return (
     <div className="sticky  top-28 rounded-4xl border border-black/5 bg-card p-8 shadow-sm ">
