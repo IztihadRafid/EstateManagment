@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { HiOutlineHomeModern } from "react-icons/hi2";
+import { ClearFilterbutton } from "../ClearFilterButton/ClearFilterbutton";
 interface EmptyStateProps {
   title: string;
   subtitle: string;
@@ -20,10 +21,8 @@ export const EmptyState = ({ title, subtitle, filter }: EmptyStateProps) => {
       )}
 
       {filter && (
-        <div className="mt-8">
-          <button onClick={() => router.replace("/marketplace")}>
-            Clear Filters
-          </button>
+        <div className="mt-8 bg-primary px-6 rounded-xl py-3 text-white">
+          <ClearFilterbutton></ClearFilterbutton>
         </div>
       )}
     </div>

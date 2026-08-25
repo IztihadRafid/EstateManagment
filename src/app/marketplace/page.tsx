@@ -4,6 +4,7 @@ import { FilterButton } from "@/constants/FilterButton";
 import { MarketPlace } from "@/components/marketplace/MarketPlace";
 import { Suspense } from "react";
 import { SkeletonCard } from "@/components/skeletonCard/SkeletonCard";
+import { ClearFilterbutton } from "@/components/ClearFilterButton/ClearFilterbutton";
 type MarketPlacePageProp = {
   searchParams: {
     search?: string;
@@ -29,7 +30,10 @@ const MarketPlacePage = async ({ searchParams }: MarketPlacePageProp) => {
         </p>
         <div className="flex items-center justify-between mt-8">
           <h2 className="text-2xl font-semibold text-foreground">Explore</h2>
-          <FilterButton></FilterButton>
+          <div className="flex items-center justify-end gap-1">
+            <FilterButton></FilterButton>
+            <ClearFilterbutton></ClearFilterbutton>
+          </div>
         </div>
 
         {/* cards */}

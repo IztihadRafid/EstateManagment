@@ -1,23 +1,28 @@
 "use client";
 import { Modal } from "./Modal";
 import { useFilterModalStore } from "@/store/useFilterModalStore";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { PropertyTypeCard } from "../properties/PropertyTypeCard";
 import { PropertyTypes } from "@/constants/propertyTypes";
+import { useRouter, useSearchParams } from "next/navigation";
 const STEPS = {
   TYPE: 0,
   LOCATION: 1,
   PRICE: 2,
 };
-const FilterModal = () => {
+function FilterModalContent() {
+  const searchParams = useSearchParams();
   const { close, isOpen, open } = useFilterModalStore();
-  const [properType, setProperType] = useState("");
-  const [location, setLocation] = useState("");
-  const [address, setaddress] = useState("");
-  const [price, setPrice] = useState("");
+  const router = useRouter();
+  const [propertyType, setPropertyType] = useState(
+    searchParams.get("propertyType") || "",
+  );
+  const [location, setLocation] = useState(searchParams.get("location") || "");
+  const [address, setaddress] = useState(searchParams.get("address") || "");
   const [step, setStep] = useState(STEPS.TYPE);
-  const [minPrice, setMinPrice] = useState(STEPS.TYPE);
-  const [maxPrice, setMaxPrice] = useState(STEPS.TYPE);
+  const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") || "");
+  const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || "");
+
   const stepTitle = () => {
     switch (step) {
       case STEPS.TYPE:
@@ -33,6 +38,15 @@ const FilterModal = () => {
 
   const applyFilter = () => {
     console.log("applied");
+    const params = new URLSearchParams();
+    if (Location) params.set("location", location);
+    if (address) params.set("address", address);
+    if (propertyType) params.set("propertyType", propertyType);
+    if (minPrice) params.set("minPrice", minPrice);
+    if (maxPrice) params.set("maxPrice", maxPrice);
+    router.replace(`/marketplace?${params.toString()}`);
+    setStep(STEPS.TYPE);
+    close();
   };
   return (
     <Modal title="Filter Properties" isOpen={isOpen} onClose={close}>
@@ -49,8 +63,8 @@ const FilterModal = () => {
                 key={item.slug}
                 label={item.label}
                 icon={item.icon}
-                selected={properType === item.slug}
-                onClick={() => setProperType(item.slug)}
+                selected={propertyType === item.slug}
+                onClick={() => setPropertyType(item.slug)}
               ></PropertyTypeCard>
             ))}
           </div>
@@ -145,6 +159,12 @@ const FilterModal = () => {
       </div>
     </Modal>
   );
-};
+}
 
-export default FilterModal;
+export default function FilterModal() {
+  return (
+    <Suspense>
+      <FilterModalContent></FilterModalContent>
+    </Suspense>
+  );
+}
