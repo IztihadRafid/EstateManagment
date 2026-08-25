@@ -1,7 +1,6 @@
 import { FrontendLayout } from "@/components/layouts/FrontendLayout";
 import Navbar from "@/components/Navbar/Navbar";
 import EmailForm from "@/components/properties/EmailForm";
-import { SkeletonCard } from "@/components/skeletonCard/SkeletonCard";
 import { getProperty } from "@/server-actions/getProperty";
 import { Suspense } from "react";
 import { FaLocationDot } from "react-icons/fa6";
@@ -34,7 +33,7 @@ async function PropertyContent({ propertyId }: { propertyId: string }) {
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Hero Image */}
         <div className="relative h-96 rounded-2xl overflow-hidden mb-8">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent z-10" />
           <div className="absolute top-4 left-4 z-20">
             <span className="px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-semibold capitalize">
               {property?.listingType}

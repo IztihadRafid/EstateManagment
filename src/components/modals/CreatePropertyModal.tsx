@@ -19,7 +19,7 @@ export const CreatePropertyModal = () => {
     PRICING: 5,
   };
 
-  const { open, close, isOpen } = useCreatePropertyModalStore();
+  const { close, isOpen } = useCreatePropertyModalStore();
   const router = useRouter();
   const [step, setStep] = useState(STEPS.TYPE);
   const [loading, setLoading] = useState(false);
@@ -80,7 +80,6 @@ export const CreatePropertyModal = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-      // formData.append("price", price);
       formData.append("location", location);
       formData.append("address", address);
       formData.append("area", area);

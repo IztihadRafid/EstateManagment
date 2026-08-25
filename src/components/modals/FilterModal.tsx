@@ -12,7 +12,7 @@ const STEPS = {
 };
 function FilterModalContent() {
   const searchParams = useSearchParams();
-  const { close, isOpen, open } = useFilterModalStore();
+  const { close, isOpen } = useFilterModalStore();
   const router = useRouter();
   const [propertyType, setPropertyType] = useState(
     searchParams.get("propertyType") || "",
