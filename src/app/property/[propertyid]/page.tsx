@@ -29,7 +29,6 @@ export default async function PropertyPage({
 }
 async function PropertyContent({ propertyId }: { propertyId: string }) {
   const property = await getProperty(propertyId);
-  console.log(property);
   return (
     <section className="py-12">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -128,24 +127,24 @@ async function PropertyContent({ propertyId }: { propertyId: string }) {
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <div className="w-2 h-2 bg-primary rounded-full" />
-                  <span>Gym</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <div className="w-2 h-2 bg-primary rounded-full" />
                   <span>Security</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <div className="w-2 h-2 bg-primary rounded-full" />
-                  <span>Balcony</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <EmailForm></EmailForm>
-          </div>
+          {property?.ownerId && (
+            <div className="lg:col-span-1">
+              <EmailForm
+                propertyTitle={property.title}
+                propertyPrice={property.price}
+                email={property.owner.email}
+                image={property.owner.image || "/images/profile.jpg"}
+                name={property.owner.name}
+              ></EmailForm>
+            </div>
+          )}
         </div>
       </div>
     </section>

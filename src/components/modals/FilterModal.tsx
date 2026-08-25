@@ -37,7 +37,6 @@ function FilterModalContent() {
   };
 
   const applyFilter = () => {
-    console.log("applied");
     const params = new URLSearchParams();
     if (Location) params.set("location", location);
     if (address) params.set("address", address);

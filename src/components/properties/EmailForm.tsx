@@ -1,6 +1,8 @@
 "use client";
+import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface InputValues {
   email: string;
@@ -8,14 +10,28 @@ interface InputValues {
   name: string;
   message: string;
 }
+interface EmailFormProps {
+  name: string;
+  email: string;
+  image: string;
+  propertyTitle: string;
+  propertyPrice: number;
+}
 
-export default function EmailForm() {
+export default function EmailForm({
+  name,
+  email,
+  image,
+  propertyTitle,
+  propertyPrice,
+}: EmailFormProps) {
   const [values, setValues] = useState<InputValues>({
     email: "",
     phone: "",
     name: "",
     message: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -26,14 +42,46 @@ export default function EmailForm() {
       [name]: value,
     }));
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!values.name || !values.email || !values.message || !values.phone) {
+      toast.error("Please fill out all fields.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      axios.post("/api/send-email", {
+        ownerEmail: email,
+        ownerName: name,
+        propertyTitle: propertyTitle,
+        propertyPrice: propertyPrice,
+        message: values.message,
+        senderEmail: values.email,
+        senderName: values.name,
+        senderPhone: values.phone,
+      });
+
+      toast.success("Email sent successfully");
+      setValues({
+        email: "",
+        phone: "",
+        name: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Failed to send email", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="sticky  top-28 rounded-4xl border border-black/5 bg-card p-8 shadow-sm ">
       <div className="flex items-center gap-4">
         <Image
-          src="/images/profile.jpg"
+          src={image}
           alt="logo"
           width={50}
           height={50}
