@@ -24,6 +24,7 @@ const navLinks = [
 
 const Navbar = ({ variant = "transparent" }: NavbarProps) => {
   const router = useRouter();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { openLogin } = useAuthModal();
   const { data: session, isPending } = authClient.useSession();
@@ -82,6 +83,11 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
           </div>
 
           <div className="hidden items-center gap-2 lg:flex">
+            {session?.user.name && (
+              <p className="text-sm font-semibold text-foreground">
+                {session.user.name}
+              </p>
+            )}
             {session?.user.email ? (
               <button onClick={handleLogout} className={actionClassName}>
                 Log Out
