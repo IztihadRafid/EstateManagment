@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <FrontendLayout>
       <Navbar></Navbar>
-      <section className="flex min-h-screen items-center overflow-hidden bg-cover bg-center bg-[url('/images/hero.jpg')] pt-32 lg:pt-36 py2">
+      <section className="flex min-h-screen items-center overflow-hidden bg-cover bg-center bg-[url('/images/image3.webp')] pt-32 lg:pt-36 py2">
         {/* overlay */}
         <div className="bg-black/15 absolute inset-0"></div>
         {/* gradient */}

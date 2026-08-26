@@ -127,7 +127,7 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
                 id="mobile-navigation"
                 className={`absolute right-0 top-full mt-5 w-72 origin-top-right animate-in fade-in zoom-in-95 slide-in-from-top-2 rounded-2xl border p-3 shadow-xl duration-200 ${
                   isTransparent
-                    ? "border-white/10  text-white backdrop-blur-xl bg-white/10"
+                    ? "border-white/10 text-white backdrop-blur-xl bg-white/20"
                     : "border-black/10 bg-card text-foreground"
                 }`}
               >
@@ -179,7 +179,7 @@ const Navbar = ({ variant = "transparent" }: NavbarProps) => {
           type="button"
           aria-label="Close navigation menu"
           onClick={() => setIsMenuOpen(false)}
-          className="fixed inset-0 z-40 cursor-default"
+          className="fixed inset-0 z-40 cursor-default bg-black/30 backdrop-blur-sm animate-in fade-in duration-200"
         />
       )}
     </header>

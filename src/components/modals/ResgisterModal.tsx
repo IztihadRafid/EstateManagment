@@ -240,7 +240,7 @@ export const ResgisterModal = () => {
             <button
               onClick={signWithGoogle}
               type="button"
-              className="w-full py-3 border border-gray-300 rounded-xl font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 border border-gray-300 rounded-xl font-semibold hover:bg-primary/10 transition-colors flex items-center justify-center gap-2"
             >
               <FaGoogle className="w-5 h-5" color="#4285F4" />
               <span className="text-primary"> Sign up with Google</span>

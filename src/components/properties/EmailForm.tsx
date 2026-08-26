@@ -62,7 +62,7 @@ export default function EmailForm({
         senderName: values.name,
         senderPhone: values.phone,
       });
-
+      console.log(email);
       toast.success("Email sent successfully");
       setValues({
         email: "",
