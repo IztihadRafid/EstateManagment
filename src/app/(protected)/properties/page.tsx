@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { FrontendLayout } from "@/components/layouts/FrontendLayout";
 import Navbar from "@/components/Navbar/Navbar";
 import { PropertyCard } from "@/components/properties/PropertyCard";
